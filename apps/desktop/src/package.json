@@ -68,7 +68,7 @@
 		"node-notifier": "^7.0.1",
 		"moment": "^2.25.3",
 		"knex": "^0.21.1",
-		"sharp": "^0.25.2",
+		"sharp": "^0.30.5",
 		"screenshot-desktop": "^1.12.2",
 		"mac-screen-capture-permissions": "^1.1.0",
 		"form-data": "^3.0.0",

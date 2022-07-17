@@ -185,7 +185,7 @@
 		"ckeditor4-angular": "^1.0.1",
 		"classlist.js": "^1.1.20150312",
 		"cloudinary-core": "^2.7.4",
-		"core-js": "^3.2.1",
+		"core-js": "^3.23.3",
 		"csv-parser": "^2.3.2",
 		"csv-writer": "^1.6.0",
 		"d3": "4.13.0",

@@ -1,4 +1,5 @@
 # Pro (Production Ready) Gauzy™ Platform
+![image](https://user-images.githubusercontent.com/6468571/181062229-eb906943-211d-4506-af38-bc945bec4673.png)
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-gauzy)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gauzy)
@@ -59,11 +60,8 @@ More detailed list of the features available in the platform:
 
 Read more [About Gauzy](https://github.com/ever-co/ever-gauzy/wiki/About-Gauzy) and [How to use it](https://github.com/ever-co/ever-gauzy/wiki/How-to-use-Gauzy) at your company, on-demand business, freelance business, agency, studio or in-house teams.
 
-## Demo, Downloads, Testing and Production
-
-### Demo
-
--   Gauzy Platform Demo at <https://demo.gauzy.co> (login `admin@ever.co` and password: `admin`).
+## Downloads, Testing and Production
+![image](https://user-images.githubusercontent.com/6468571/181062417-19abc926-554d-4f0f-8eb0-42e795d88fdf.png)
 
 ### Download
 
@@ -104,6 +102,7 @@ More information about our Server & Desktop Apps:
 - You can read more information about our Desktop Apps in the [Desktop Apps Wiki Page](https://github.com/ever-co/ever-gauzy/wiki/Gauzy-Desktop-Apps) and about our Server in the [Server Wiki Page](https://github.com/ever-co/ever-gauzy/wiki/Gauzy-Server). - The Desktop Apps Wiki Page can be found at https://git
 
 ## Technology Stack and Requirements
+![image](https://user-images.githubusercontent.com/6468571/181062756-e2a4f5cc-b800-4b59-98d0-87519932210e.png)
 
 -   [TypeScript](https://www.typescriptlang.org) language
 -   [NodeJs](https://nodejs.org) / [NestJs](https://github.com/nestjs/nest)
@@ -123,10 +122,12 @@ Note: thanks to TypeORM, Gauzy will support lots of DBs: SQLite (default, for de
 #### See also README.md and CREDITS.md files in relevant folders for lists of libraries and software included in the Platform, information about licenses and other details.
 
 ## Documentation
+![image](https://user-images.githubusercontent.com/6468571/181062811-309b8163-a403-4be9-822f-b143c1e29528.png)
 
 Please refer to our official [Platform Documentation](https://docs.gauzy.co) and to our [Wiki](https://github.com/ever-co/ever-gauzy/wiki) (WIP).
 
 ## Quick Start
+![image](https://user-images.githubusercontent.com/6468571/181062849-99cf49dd-4dd7-4190-ab31-284505704f1b.png)
 
 ### With Docker Compose
 
@@ -182,10 +183,12 @@ Notes:
 -   Pull requests are always welcome! Please base pull requests against the _develop_ branch and follow the [contributing guide](.github/CONTRIBUTING.md).
 
 ## Contributors
+![image](https://user-images.githubusercontent.com/6468571/181062900-105a313e-3f9b-434e-826f-32133252ff0e.png)
 
 View full list of our [contributors](https://github.com/ever-co/ever-gauzy/graphs/contributors).
 
 ## Contact Us
+![image](https://user-images.githubusercontent.com/6468571/181062935-711c286f-19ac-4249-87f0-d74d47d6d288.png)
 
 -   [Ever.co Website Contact Us page](https://ever.co/contacts)
 -   [Slack Community](https://join.slack.com/t/gauzy/shared_invite/enQtNzc5MTA5MDUwODg2LTI0MGEwYTlmNWFlNzQzMzBlOWExNTk0NzAyY2IwYWYwMzZjMTliYjMwNDI3NTJmYmM4MDQ4NDliMDNiNDY1NWU)
@@ -199,6 +202,7 @@ View full list of our [contributors](https://github.com/ever-co/ever-gauzy/graph
 -   [Gauzy Platform @ Facebook](https://www.facebook.com/gauzyplatform)
 
 ## Security
+![image](https://user-images.githubusercontent.com/6468571/181062982-b323fd14-b58d-4535-862d-71992c6e0276.png)
 
 Gauzy™ follows good security practices, but 100% security cannot be guaranteed in any software!  
 Gauzy™ is provided AS IS without any warranty. Use at your own risk!  
@@ -209,6 +213,7 @@ In a production setup, all client-side to server-side (backend, APIs) communicat
 If you discover any issue regarding security, please disclose the information responsibly by sending an email to <mailto:security@ever.co> or on  [![huntr](https://cdn.huntr.dev/huntr_security_badge_mono.svg)](https://huntr.dev) and not by creating a GitHub issue.
 
 ## License
+![image](https://user-images.githubusercontent.com/6468571/181063013-b21bc94c-51fe-4fda-8ca8-d4ff0b7c6324.png)
 
 We are happy to provide our support to the open-source community. If you are working on awesome non-profit or open-source projects, we are happy to assist you and will provide (subject to the [acceptance criteria](https://github.com/ever-co/ever-gauzy/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects) an Ever Gauzy Enterprise edition license and a free hosting option for your projects! In order to make a request, you are welcome to get in touch with us at ever@ever.co. More specifics described in our [Wiki](https://github.com/ever-co/ever-gauzy/wiki/Free-license-and-hosting-for-Non-profit-and-Open-Source-projects).
 
@@ -225,6 +230,7 @@ This software is available under following licenses:
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fever-co%2Fgauzy.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fever-co%2Fgauzy?ref=badge_large)
 
 ## Trademarks
+![image](https://user-images.githubusercontent.com/6468571/181063047-0c9927c6-c9ad-4655-aa50-06d1032dd7e8.png)
 
 **Ever**® is a registered trademark of [Ever Co. LTD](https://ever.co).  
 **Ever® Demand™**, **Ever® Gauzy™** and **Ever® OpenSaaS™**  are all trademarks of [Ever Co. LTD](https://ever.co).
@@ -234,6 +240,7 @@ Unless Ever Co. LTD. has provided express written clearance to do so, the tradem
 Every other brand and product name is either a trademark, a registered trademark, or a service mark that belongs to the firm or person who owns that name. Trademarks and registered trademarks are the strongest forms of intellectual property protection.
 
 ## Copyright
+![image](https://user-images.githubusercontent.com/6468571/181063084-dc7d31e9-8fbd-44d3-814a-e9e0e72aa12d.png)
 
 #### Copyright © 2019-present, Ever Co. LTD. All rights reserved.
 
@@ -250,6 +257,7 @@ Every other brand and product name is either a trademark, a registered trademark
 [![Crowdin](https://badges.crowdin.net/e/1d2b3405d65a56ec116d0984fd579cc9/localized.svg)](https://ever.crowdin.com/gauzy)
 
 ## P.S.
+![image](https://user-images.githubusercontent.com/6468571/181063117-1b0b4cab-3fca-4838-be79-db91e862a2d3.png)
 
 -   If you interested to run on-demand (delivery) or digital marketplace business, check open-source [Ever Demand Platform](https://github.com/ever-co/ever-demand)
 -   [We are Hiring: remote TypeScript / NestJS / Angular developers](https://github.com/ever-co/jobs#available-positions)

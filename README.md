@@ -27,7 +27,7 @@ Ever® Gauzy™ Platform main features:
 - Management of Financial Resources and Costs (including Accounting, Billing, and Other Related Tasks)
 - Management of Inventory, Management of the Supply Chain, and Management of Production
 
-More detailed list of the features available in the platform:
+More detailed list of the features available in the platform: 
 
 - A Dashboard (which gives an overview of many indicators, such as the revenue and costs of the organization, employee bonuses, and so on)
 - Time Management, Tracking Time, Tracking Activities, and Timesheets

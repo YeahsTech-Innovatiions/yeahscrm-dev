@@ -177,6 +177,7 @@ Notes:
 -   In addition, check [Gauzy Pulumi](https://github.com/ever-co/ever-gauzy-pulumi) project (WIP), it makes complex Clouds deployments possible with a single command (`pulumi up`). Note: it currently supports AWS EKS (Kubernetes) for development and production with Application Load Balancers and AWS RDS Serverless PostgreSQL DB deployments. We also implemented deployments to ECS EC2 and Fargate Clusters in the same Pulumi project.
 
 ## Contribute
+![image](https://user-images.githubusercontent.com/6468571/181063315-f3186e08-c5f0-4bdc-a2c1-8d67103dabdd.png)
 
 -   Please give us :star: on Github, it **helps**!
 -   You are more than welcome to submit feature requests in the [separate repo](https://github.com/ever-co/feature-requests/issues)

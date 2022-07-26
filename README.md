@@ -1,4 +1,4 @@
-# Pro (Production Ready) Ever Gauzy Platform
+# Pro (Production Ready) Gauzy Platform
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-gauzy)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gauzy)

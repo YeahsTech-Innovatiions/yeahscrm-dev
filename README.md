@@ -1,11 +1,11 @@
-# Pro (Production Ready) Gauzy Platform
+# Pro (Production Ready) Gauzy™ Platform
 
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/ever-co/ever-gauzy)
 [![Join the community on Spectrum](https://withspectrum.github.io/badge/badge.svg)](https://spectrum.chat/gauzy)
 [![Gitter](https://badges.gitter.im/JoinChat.svg)](https://gitter.im/ever-co/ever-gauzy?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Get help on Codementor](https://cdn.codementor.io/badges/get_help_github.svg)](https://www.codementor.io/evereq?utm_source=github&utm_medium=button&utm_term=evereq&utm_campaign=github)
 
-Ever® Gauzy Pro is an open-source program designed for sharing and on-demand service economies. Its name was created by combining the "Ever" and "Gazy" Ever® trademarks.
+Ever® Gauzy™ Pro is an open-source program designed for sharing and on-demand service economies. Its name was created by combining the "Ever" and "Gazy" Ever® trademarks.
 
 - A word associated with enterprise resource planning software (ERP)
 - CRM refers to software that manages a company's interactions with its customers.
@@ -15,7 +15,7 @@ Ever® Gauzy Pro is an open-source program designed for sharing and on-demand se
 
 For further information about the platform, please visit the website of our firm. - **<https://gauzy.co>**. 
 
-The Ever® Gauzy Platform is one of the numerous subsystems that comprise our Open Platform for On-Demand and Sharing Economies system, which also consists of many other subsystems. Simply perusing our website will provide you with further details regarding the services we provide. **<https://ever.co>**.
+The Ever® Gauzy™ Platform is one of the numerous subsystems that comprise our Open Platform for On-Demand and Sharing Economies system, which also consists of many other subsystems. Simply perusing our website will provide you with further details regarding the services we provide. **<https://ever.co>**.
 
 Ever® Gauzy™ Platform main features:
 

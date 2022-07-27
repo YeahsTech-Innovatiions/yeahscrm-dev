@@ -231,7 +231,7 @@
 		"ng2-smart-table": "^1.7.2",
 		"rxjs": "^7.4.0",
 		"unleash": "^2.0.2",
-		"autoprefixer": "10.4.5"
+		"autoprefixer": "10.4.7"
 	},
 	"devDependencies": {
 		"@angular-devkit/architect": "^0.1302.2",

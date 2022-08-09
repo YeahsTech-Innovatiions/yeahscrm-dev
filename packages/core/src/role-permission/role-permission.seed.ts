@@ -12,8 +12,7 @@ import { RolePermission } from './role-permission.entity';
 export const createRolePermissions = async (
 	dataSource: DataSource,
 	roles: IRole[],
-	tenants: ITenant[],
-	isDemo: boolean
+	tenants: ITenant[]
 ): Promise<IRolePermission[]> => {
 
 	// removed permissions for all users in DEMO mode
@@ -30,10 +29,8 @@ export const createRolePermissions = async (
 			);
 			if (role) {
 				defaultEnabledPermissions
-					.filter((permission) => isDemo ? !deniedPermissions.includes(permission) : true)
 					.forEach((permission) => {
 						const rolePermission = new RolePermission();
-						rolePermission.role = role;
 						rolePermission.permission = permission;
 						rolePermission.enabled = true;
 						rolePermission.tenant = tenant;
@@ -48,8 +45,7 @@ export const createRolePermissions = async (
 
 
 export const reloadRolePermissions = async (
-	dataSource: DataSource,
-	isDemo: boolean
+	dataSource: DataSource
 ) => {
 	// removed permissions for all users in DEMO mode
 	const deniedPermissions = [
@@ -69,9 +65,6 @@ export const reloadRolePermissions = async (
 		const roles = await dataSource.manager.query(`SELECT * FROM "role" WHERE "role"."tenantId" = $1`, [tenantId]);
 
 		for await (const { role: roleEnum, defaultEnabledPermissions } of DEFAULT_ROLE_PERMISSIONS) {
-			const permissions = defaultEnabledPermissions.filter(
-				(permission) => isDemo ? !deniedPermissions.includes(permission) : true
-			);
 			const role = roles.find((dbRole) => dbRole.name === roleEnum);
 			if (isNotEmpty(permissions)) {
 				for await (const permission of permissions) {

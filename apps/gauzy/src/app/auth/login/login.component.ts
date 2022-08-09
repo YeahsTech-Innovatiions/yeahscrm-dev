@@ -19,7 +19,6 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
 
   isShown: boolean = false;
   RolesEnum = RolesEnum;
-  isDemo: boolean = environment.DEMO;
   showPassword: boolean = false;
 
   constructor (
@@ -50,19 +49,12 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
   }
 
   collapseDemo () {
-    if (this.isDemo) {
-      this.isShown = !this.isShown;
-    }
   }
 
   /**
    * Autofill Super Admin Credential By Default
    */
   autoFillCredential () {
-    if (this.isDemo) {
-      this.user.email = environment.DEMO_SUPER_ADMIN_EMAIL;
-      this.user.password = environment.DEMO_SUPER_ADMIN_PASSWORD;
-    }
   }
 
   /**
@@ -71,23 +63,5 @@ export class NgxLoginComponent extends NbLoginComponent implements OnInit {
    * @param role
    */
   autoLogin (role: RolesEnum) {
-    if (this.isDemo) {
-      switch (role) {
-        case RolesEnum.SUPER_ADMIN:
-          this.autoFillCredential();
-          break;
-        case RolesEnum.ADMIN:
-          this.user.email = environment.DEMO_ADMIN_EMAIL;
-          this.user.password = environment.DEMO_ADMIN_PASSWORD;
-          break;
-        case RolesEnum.EMPLOYEE:
-          this.user.email = environment.DEMO_EMPLOYEE_EMAIL;
-          this.user.password = environment.DEMO_EMPLOYEE_PASSWORD;
-          break;
-        default:
-          break;
-      }
-      this.form.ngSubmit.emit();
-    }
   }
 }

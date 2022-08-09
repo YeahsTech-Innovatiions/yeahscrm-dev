@@ -82,7 +82,6 @@ export class HeaderComponent extends TranslationBaseComponent
 	hasPermissionTimeTracker = false;
 	isEmployee = false;
 	isElectron: boolean = environment.IS_ELECTRON;
-	isDemo: boolean = environment.DEMO;
 
 	@Input() position = 'normal';
 	user: IUser;

@@ -52,7 +52,7 @@ import { ServerDataSource } from '../../@core/utils/smart-table';
 	templateUrl: './employees.component.html',
 	styleUrls: ['./employees.component.scss']
 })
-export class EmployeesComponent extends PaginationFilterBaseComponent 
+export class EmployeesComponent extends PaginationFilterBaseComponent
 	implements OnInit, OnDestroy {
 
 	settingsSmartTable: object;
@@ -77,7 +77,7 @@ export class EmployeesComponent extends PaginationFilterBaseComponent
 	}
 
 	/*
-	* Actions Buttons directive 
+	* Actions Buttons directive
 	*/
 	@ViewChild('actionButtons', { static: true }) actionButtons: TemplateRef<any>;
 
@@ -457,7 +457,6 @@ export class EmployeesComponent extends PaginationFilterBaseComponent
 
 		this.smartTableSource = new ServerDataSource(this.http, {
 			endPoint: `${API_PREFIX}/employee/pagination`,
-			relations: ['user', 'tags'],
 			where: {
 				...{ organizationId, tenantId, isActive: !this.includeDeleted },
 				...this.filters.where
@@ -488,10 +487,6 @@ export class EmployeesComponent extends PaginationFilterBaseComponent
 			const { activePage, itemsPerPage } = this.getPagination();
 			this.smartTableSource.setPaging(activePage, itemsPerPage, false);
 			this._loadGridLayoutData();
-			this.setPagination({
-				...this.getPagination(),
-				totalItems: this.smartTableSource.count()
-			});
 			this.loading = false;
 		} catch (error) {
 			this.toastrService.danger(error);
@@ -541,6 +536,10 @@ export class EmployeesComponent extends PaginationFilterBaseComponent
 		if (this.dataLayoutStyle === ComponentLayoutStyleEnum.CARDS_GRID){
 			await this.smartTableSource.getElements();
 			this.employees = this.smartTableSource.getData();
+			this.setPagination({
+				...this.getPagination(),
+				totalItems: this.smartTableSource.count()
+			});
 		}
 	}
 
@@ -550,7 +549,7 @@ export class EmployeesComponent extends PaginationFilterBaseComponent
 			actions: false,
 			pager: {
 				display: false,
-				perPage: pagination ? pagination.itemsPerPage : 10
+				perPage: pagination ? pagination.itemsPerPage : this.minItemPerPage
 			},
 			noDataMessage: this.getTranslation('SM_TABLE.NO_DATA.EMPLOYEE'),
 			columns: {

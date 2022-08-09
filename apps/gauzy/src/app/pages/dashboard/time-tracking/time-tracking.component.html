@@ -24,16 +24,13 @@
 						class="manage-widget"
 						status="basic"
 						size="small"
+						nbPopoverPlacement="bottom"
+						[nbPopover]="widgetManager"
+						nbPopoverTrigger="click"
 						nbButton
 					>
 						{{ 'BUTTONS.MANAGE_WIDGET' | translate }}
-						<nb-icon
-							icon="more-vertical-outline"
-							nbPopoverPlacement="bottom"
-							[nbPopover]="widgetManager"
-							nbPopoverTrigger="click"
-							nbButton
-						></nb-icon>
+						<nb-icon icon="more-vertical-outline"></nb-icon>
 					</button>
 				</div>
 			</div>
@@ -280,32 +277,72 @@
 									[id]="employee?.id"
 									class="mb-3"
 								></ngx-avatar>
-								<div class="view-all">
-									<ng-container>
-										<button
-											nbButton
-											status="primary"
-											size="small"
-											outline
-											(click)="
-												redirectToScreenshots(employee)
-											"
+								<div class="button-container">
+									<div class="swiper-button-container">
+										<div
+											class="swiper-button"
+											(click)="slidePrev(swiper)"
 										>
-											{{ 'BUTTONS.VIEW_ALL' | translate }}
-										</button>
-									</ng-container>
+											<i class="fas fa-angle-left"></i>
+										</div>
+										<div
+											class="swiper-button"
+											(click)="slideNext(swiper)"
+										>
+											<i class="fas fa-angle-right"></i>
+										</div>
+									</div>
+									<div class="view-all">
+										<ng-container>
+											<button
+												nbButton
+												status="primary"
+												size="small"
+												outline
+												(click)="
+													redirectToScreenshots(
+														employee
+													)
+												"
+											>
+												{{
+													'BUTTONS.VIEW_ALL'
+														| translate
+												}}
+											</button>
+										</ng-container>
+									</div>
 								</div>
 							</div>
-							<div class="custom-container">
-								<div
-									*ngFor="let timeSlot of employee.timeSlots"
+							<div>
+								<swiper
+									[slidesPerView]="3"
+									[spaceBetween]="16"
+									[slidesPerGroup]="3"
+									[loop]="false"
+									[loopFillGroupWithBlank]="true"
+									[pagination]="{
+										clickable: true
+									}"
+									[navigation]="true"
+									[virtual]="true"
+									#swiper
+									class="m-swiper"
 								>
-									<ngx-screenshots-item
-										[timeSlot]="timeSlot"
-										(delete)="onDelete()"
-										[multiple]="false"
-									></ngx-screenshots-item>
-								</div>
+									<ng-container
+										*ngFor="
+											let timeSlot of employee.timeSlots
+										"
+									>
+										<ng-template swiperSlide>
+											<ngx-screenshots-item
+												[timeSlot]="timeSlot"
+												(delete)="onDelete()"
+												[multiple]="false"
+											></ngx-screenshots-item>
+										</ng-template>
+									</ng-container>
+								</swiper>
 							</div>
 						</div>
 					</ng-container>
@@ -757,7 +794,12 @@
 <ng-template #widgetManager>
 	<div class="widget-popover">
 		<div class="category">
-			<div class="view">{{ 'TIMESHEET.VIEW_WIDGETS' | translate }}</div>
+			<div class="view">
+				{{ 'TIMESHEET.VIEW_WIDGETS' | translate }}
+				<button class="manage-widget undo" (click)="undo()" nbButton>
+					<i class="fas fa-undo"></i>Undo
+				</button>
+			</div>
 			<ng-container *ngIf="widgets.length > 0">
 				<ng-container *ngFor="let widget of widgets">
 					<div (click)="updateWidgetVisibility(widget)" class="title">
@@ -776,7 +818,16 @@
 		</div>
 		<div class="line"></div>
 		<div class="category">
-			<div class="view">{{ 'TIMESHEET.VIEW_WINDOWS' | translate }}</div>
+			<div class="view">
+				{{ 'TIMESHEET.VIEW_WINDOWS' | translate
+				}}<button
+					class="manage-widget undo"
+					(click)="undo(true)"
+					nbButton
+				>
+					<i class="fas fa-undo"></i>Undo
+				</button>
+			</div>
 			<ng-container *ngIf="windows.length > 0">
 				<ng-container *ngFor="let window of windows">
 					<div (click)="updateWindowVisibility(window)" class="title">

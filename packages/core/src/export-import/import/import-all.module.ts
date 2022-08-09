@@ -11,6 +11,7 @@ import { coreEntities } from './../../core/entities';
 import { CommandHandlers } from './commands/handlers';
 import { ImportRecordModule } from './../import-record';
 import { ImportHistoryModule } from './../import-history';
+import { TenantModule } from './../../tenant/tenant.module';
 import { UserModule } from './../../user/user.module';
 
 @Module({
@@ -29,6 +30,7 @@ import { UserModule } from './../../user/user.module';
 			...coreEntities,
 			...getEntitiesFromPlugins(getConfig().plugins)
 		]),
+		TenantModule,
 		UserModule,
 		ImportRecordModule,
 		ImportHistoryModule
@@ -38,6 +40,6 @@ import { UserModule } from './../../user/user.module';
 		ImportAllService,
 		...CommandHandlers
 	],
-	exports: [ImportAllService]
+	exports: []
 })
 export class ImportAllModule {}

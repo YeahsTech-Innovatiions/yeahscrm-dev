@@ -1,7 +1,7 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
-import { getConnection, getManager, IsNull, Repository } from 'typeorm';
+import { Connection, IsNull, Repository } from 'typeorm';
 import { ColumnMetadata } from 'typeorm/metadata/ColumnMetadata';
-import { InjectRepository } from '@nestjs/typeorm';
+import { InjectConnection, InjectRepository } from '@nestjs/typeorm';
 import { CommandBus } from '@nestjs/cqrs';
 import * as fs from 'fs';
 import * as unzipper from 'unzipper';
@@ -167,7 +167,7 @@ export interface IRepositoryModel<T> {
 
 @Injectable()
 export class ImportAllService implements OnModuleInit {
-	
+
 	private _dirname: string;
 	private _extractPath: string;
 
@@ -541,6 +541,9 @@ export class ImportAllService implements OnModuleInit {
 		@InjectRepository(UserOrganization)
 		private readonly userOrganizationRepository: Repository<UserOrganization>,
 
+		@InjectConnection()
+		private readonly dataSource: Connection,
+
 		private readonly configService: ConfigService,
 		private readonly commandBus: CommandBus
 	) {}
@@ -562,7 +565,7 @@ export class ImportAllService implements OnModuleInit {
 	}
 
 	public async unzipAndParse(filePath: string, cleanup: boolean = false) {
-		
+
 		//extracted import csv directory path
 		this._extractPath = path.join(path.join(this._dirname, filePath), '../csv');
 
@@ -579,7 +582,7 @@ export class ImportAllService implements OnModuleInit {
 		*/
 		const tenantId = RequestContext.currentTenantId();
 		for await (const item of this.repositories) {
-			
+
 			const { repository, isStatic = false, relations = [] } = item;
 			const nameFile = repository.metadata.tableName;
 			const csvPath = path.join(this._extractPath, `${nameFile}.csv`);
@@ -591,7 +594,7 @@ export class ImportAllService implements OnModuleInit {
 			}
 
 			console.log(chalk.magenta(`Importing process start for table: ${masterTable}`));
-			
+
 			await new Promise(async (resolve, reject) => {
 				try {
 					/**
@@ -600,7 +603,7 @@ export class ImportAllService implements OnModuleInit {
 					*/
 					if (cleanup && isStatic !== true) {
 						try {
-							let sql = `DELETE FROM "${masterTable}" WHERE "${masterTable}"."tenantId" = '${tenantId}'`; 
+							let sql = `DELETE FROM "${masterTable}" WHERE "${masterTable}"."tenantId" = '${tenantId}'`;
 							await repository.query(sql);
 							console.log(chalk.yellow(`Clean up processing for table: ${masterTable}`));
 						} catch (error) {
@@ -622,9 +625,9 @@ export class ImportAllService implements OnModuleInit {
 							try {
 								if (isNotEmpty(data)) {
 									await this.migrateImportEntityRecord(
-										item, 
+										item,
 										data
-									); 
+									);
 									console.log(chalk.green(`Success to inserts data for table: ${masterTable}`));
 								}
 							} catch (error) {
@@ -648,7 +651,7 @@ export class ImportAllService implements OnModuleInit {
 	}
 
 	async parseRelationalTables(
-		entity: IRepositoryModel<any>, 
+		entity: IRepositoryModel<any>,
 		cleanup: boolean = false
 	) {
 		const { relations } = entity;
@@ -674,7 +677,7 @@ export class ImportAllService implements OnModuleInit {
 					});
 					rstream.on('end', async () => {
 						results = results.filter(isNotEmpty);
-						
+
 						for await (const data of results) {
 							try {
 								if (isNotEmpty(data)) {
@@ -706,7 +709,7 @@ export class ImportAllService implements OnModuleInit {
 	async migrateImportEntityRecord(
 		item: IRepositoryModel<any>,
 		entity: any
-	): Promise<any> { 
+	): Promise<any> {
 		const { repository, uniqueIdentifier = [] } = item;
 		const masterTable = repository.metadata.tableName;
 
@@ -724,8 +727,8 @@ export class ImportAllService implements OnModuleInit {
 				}
 				const desination = await this.commandBus.execute(
 					new ImportEntityFieldMapOrCreateCommand(
-						repository, 
-						where, 
+						repository,
+						where,
 						await this.mapFields(item, entity),
 						source.id
 					)
@@ -733,7 +736,7 @@ export class ImportAllService implements OnModuleInit {
 				if (desination) {
 					await this.mappedImportRecord(
 						item,
-						desination, 
+						desination,
 						source
 					);
 				}
@@ -795,7 +798,7 @@ export class ImportAllService implements OnModuleInit {
 				new ImportRecordFindOrFailCommand({
 					tenantId: RequestContext.currentTenantId(),
 					sourceId: data['organizationId'],
-					entityType: getManager().getRepository(Organization).metadata.tableName
+					entityType: this.organizationRepository.metadata.tableName
 				})
 			);
 			data['organizationId'] = record ? record.destinationId : IsNull().value;
@@ -804,7 +807,7 @@ export class ImportAllService implements OnModuleInit {
 			item, await this.mapRelationFields(item, data)
 		);
 	}
-	
+
 	/*
 	* Map timestamps fields here
 	*/
@@ -824,7 +827,7 @@ export class ImportAllService implements OnModuleInit {
 				}
 			}
 		}
-		return data; 
+		return data;
 	}
 
 	/*
@@ -841,19 +844,19 @@ export class ImportAllService implements OnModuleInit {
 					if (isNotEmpty(foreignKeys) && foreignKeys instanceof Array) {
 						for await (const { column, repository } of foreignKeys) {
 							const { record } = await this.commandBus.execute(
-								new ImportRecordFindOrFailCommand({ 
+								new ImportRecordFindOrFailCommand({
 									tenantId: RequestContext.currentTenantId(),
-									sourceId: data[column], 
+									sourceId: data[column],
 									entityType: repository.metadata.tableName
 								})
 							);
-							data[column] = record ? record.destinationId : IsNull().value; 
+							data[column] = record ? record.destinationId : IsNull().value;
 						}
 					}
 				}
 				resolve(data);
 			} catch (error) {
-				console.log(chalk.red('Failed to map relation entity before insert'), error);	
+				console.log(chalk.red('Failed to map relation entity before insert'), error);
 				reject(error);
 			}
 		});
@@ -869,7 +872,7 @@ export class ImportAllService implements OnModuleInit {
 			}
 
 			const className = _.camelCase(entity.name);
-			const repository = getConnection().getRepository(entity);
+			const repository = this.dataSource.getRepository(entity);
 
 			this[className] = repository;
 			this.dynamicEntitiesClassMap.push({
@@ -917,7 +920,7 @@ export class ImportAllService implements OnModuleInit {
 				isStatic: true,
 				uniqueIdentifier: [ { column: 'name' }, { column: 'groupName' } ],
 				relations: [
-					{ 
+					{
 						joinTableName: 'integration_integration_type',
 						isCheckRelation: true,
 						foreignKeys: [
@@ -949,7 +952,7 @@ export class ImportAllService implements OnModuleInit {
 			/**
 			* These entities need TENANT and ORGANIZATION
 			*/
-			{ 
+			{
 				repository: this.userRepository,
 				isStatic: true,
 			 	isCheckRelation: true,
@@ -971,7 +974,7 @@ export class ImportAllService implements OnModuleInit {
 			{
 				repository: this.organizationTeamRepository
 			},
-			{ 
+			{
 				repository: this.organizationAwardRepository
 			},
 			{
@@ -1228,7 +1231,7 @@ export class ImportAllService implements OnModuleInit {
 					{ column: 'employeeId', repository: this.employeeRepository }
 				]
 			},
-			{ 
+			{
 				repository: this.employeeAppointmentRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1244,9 +1247,9 @@ export class ImportAllService implements OnModuleInit {
 				]
 			},
 			/*
-			* Email & Template  
+			* Email & Template
 			*/
-			{ 
+			{
 				repository: this.emailTemplateRepository
 			},
 			{
@@ -1261,7 +1264,7 @@ export class ImportAllService implements OnModuleInit {
 				repository: this.estimateEmailRepository
 			},
 			/*
-			* Employee & Related Entities 
+			* Employee & Related Entities
 			*/
 			{
 				repository: this.employeeAwardRepository,
@@ -1305,9 +1308,9 @@ export class ImportAllService implements OnModuleInit {
 				repository: this.employeeLevelRepository
 			},
 			/*
-			* Equipment & Related Entities 
+			* Equipment & Related Entities
 			*/
-			{ 
+			{
 				repository: this.equipmentSharingPolicyRepository
 			},
 			{
@@ -1338,9 +1341,9 @@ export class ImportAllService implements OnModuleInit {
 				]
 			},
 			/*
-			* Event Type & Related Entities 
+			* Event Type & Related Entities
 			*/
-			{ 
+			{
 				repository: this.eventTypeRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1350,7 +1353,7 @@ export class ImportAllService implements OnModuleInit {
 			/*
 			* Invoice & Related Entities
 			*/
-			{ 
+			{
 				repository: this.invoiceRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1381,7 +1384,7 @@ export class ImportAllService implements OnModuleInit {
 				]
 			},
 			/*
-			* Expense & Related Entities 
+			* Expense & Related Entities
 			*/
 			{
 				repository: this.expenseCategoryRepository
@@ -1399,7 +1402,7 @@ export class ImportAllService implements OnModuleInit {
 			/*
 			* Income
 			*/
-			{ 
+			{
 				repository: this.incomeRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1407,7 +1410,7 @@ export class ImportAllService implements OnModuleInit {
 				]
 			},
 			/*
-			* Feature & Related Entities 
+			* Feature & Related Entities
 			*/
 			{
 				repository: this.featureOrganizationRepository,
@@ -1428,7 +1431,7 @@ export class ImportAllService implements OnModuleInit {
 			/*
 			* Key Result & Related Entities
 			*/
-			{ 
+			{
 				repository: this.keyResultRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1446,9 +1449,9 @@ export class ImportAllService implements OnModuleInit {
 				repository: this.keyResultUpdateRepository
 			},
 			/*
-			* Goal KPI & Related Entities 
+			* Goal KPI & Related Entities
 			*/
-			{ 
+			{
 				repository: this.goalKpiRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1508,7 +1511,7 @@ export class ImportAllService implements OnModuleInit {
 			/*
 			* Invite & Related Entities
 			*/
-			{ 
+			{
 				repository: this.inviteRepository,
 				isCheckRelation: true,
 				foreignKeys: [
@@ -1552,7 +1555,7 @@ export class ImportAllService implements OnModuleInit {
 			/*
 			* Pipeline & Stage Entities
 			*/
-			{ 
+			{
 				repository: this.pipelineRepository
 			},
 			{
@@ -1574,7 +1577,7 @@ export class ImportAllService implements OnModuleInit {
 			/*
 			* Product & Related Entities
 			*/
-			{ 
+			{
 				repository: this.productCategoryRepository
 			},
 			{

@@ -28,7 +28,6 @@ import { FilterArrayPipe } from '../../../@shared/pipes/filter-array.pipe';
 import { LeafletMapComponent } from '../../../@shared/forms/maps/leaflet/leaflet.component';
 import { ErrorHandlingService, OrganizationProjectsService, Store, ToastrService } from '../../../@core/services';
 import { FormHelpers } from '../../../@shared/forms';
-import { DUMMY_PROFILE_IMAGE } from '../../../@core/constants';
 
 @UntilDestroy({ checkProperties: true })
 @Component({
@@ -36,7 +35,7 @@ import { DUMMY_PROFILE_IMAGE } from '../../../@core/constants';
 	templateUrl: './contact-mutation.component.html',
 	styleUrls: ['./contact-mutation.component.scss']
 })
-export class ContactMutationComponent extends TranslationBaseComponent 
+export class ContactMutationComponent extends TranslationBaseComponent
 	implements OnInit {
 
 	FormHelpers: typeof FormHelpers = FormHelpers;
@@ -84,7 +83,7 @@ export class ContactMutationComponent extends TranslationBaseComponent
 	canceled = new EventEmitter();
 
 	/*
-	* Output event emitter for add/edit organization contact event 
+	* Output event emitter for add/edit organization contact event
 	*/
 	@Output()
 	addOrEditOrganizationContact = new EventEmitter();
@@ -112,7 +111,7 @@ export class ContactMutationComponent extends TranslationBaseComponent
 	organizationContactBudgetTypeEnum = OrganizationContactBudgetTypeEnum;
 
 	/**
-	* Main Content Stepper Form Group 
+	* Main Content Stepper Form Group
 	*/
 	public contMainForm: FormGroup = ContactMutationComponent.buildMainForm(this.fb);
 	static buildMainForm(formBuilder: FormBuilder): FormGroup {
@@ -132,12 +131,12 @@ export class ContactMutationComponent extends TranslationBaseComponent
 	}
 
 	/**
-	* Location Stepper Form Group 
+	* Location Stepper Form Group
 	*/
 	readonly locationForm: FormGroup = LocationFormComponent.buildForm(this.fb);
 
 	/**
-	* Budget Stepper Form Group 
+	* Budget Stepper Form Group
 	*/
 	readonly budgetForm: FormGroup = ContactMutationComponent.buildBudgetForm(this.fb);
 	static buildBudgetForm(formBuilder: FormBuilder): FormGroup {
@@ -202,8 +201,8 @@ export class ContactMutationComponent extends TranslationBaseComponent
 
 	/**
 	 * Load employees from multiple selected employees
-	 * 
-	 * @param employees 
+	 *
+	 * @param employees
 	 */
 	public onLoadEmployees(employees: IEmployee[]) {
 		this.employees = employees;
@@ -234,8 +233,8 @@ export class ContactMutationComponent extends TranslationBaseComponent
 			tags: this.organizationContact
 					? (this.organizationContact.tags)
 					: [],
-			name: this.organizationContact 
-						? this.organizationContact.name 
+			name: this.organizationContact
+						? this.organizationContact.name
 						: '',
 			primaryEmail: this.organizationContact
 								? this.organizationContact.primaryEmail
@@ -271,7 +270,7 @@ export class ContactMutationComponent extends TranslationBaseComponent
 			budgetType: this.organizationContact
 							? this.organizationContact.budgetType
 							: OrganizationContactBudgetTypeEnum.HOURS,
-			budget: this.organizationContact 
+			budget: this.organizationContact
 						? this.organizationContact.budget
 						: null
 		});
@@ -321,7 +320,7 @@ export class ContactMutationComponent extends TranslationBaseComponent
 				})
 				.then((project) => {
 					this.toastrService.success('NOTES.ORGANIZATIONS.EDIT_ORGANIZATIONS_PROJECTS.ADD_PROJECT', {
-						name 
+						name
 					});
 					return project;
 				});
@@ -355,10 +354,7 @@ export class ContactMutationComponent extends TranslationBaseComponent
 		const { name, primaryEmail, primaryPhone, fax, tags = [] } = this.contMainForm.getRawValue();
 
 		let { imageUrl } = this.contMainForm.getRawValue();
-		if (imageUrl === DUMMY_PROFILE_IMAGE) {
-			imageUrl = null;
-		}
-
+		
 		const location = this.locationFormDirective.getValue();
 		const { coordinates } = location['loc'];
 		delete location['loc'];
@@ -370,9 +366,10 @@ export class ContactMutationComponent extends TranslationBaseComponent
 			...{ latitude, longitude }
 		};
 
-		const members = (this.members || this.selectedEmployeeIds || [])
+		let members = (this.members || this.selectedEmployeeIds || [])
 						.map((id) => this.employees.find((e) => e.id === id))
 						.filter((e) => !!e);
+		if(!members.length) members = this.selectedMembers;
 
 		let { projects = [] } = this.contMainForm.getRawValue();
 		projects.map((project: IOrganizationProject) => {

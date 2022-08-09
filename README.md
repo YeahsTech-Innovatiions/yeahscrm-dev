@@ -140,6 +140,45 @@ Launch your web browser and go to http://localhost:4200.
 - To access the Employee user dashboard, use the email address "employee@ever.co" and the password "123456."
 - Enjoy!
 
+```
+
+IS_DOCKER=true
+
+# API Host
+API_HOST=api
+
+# API Port
+API_PORT=3000
+
+# WEB UI Host
+WEB_HOST=webapp
+
+# WEB UI Port
+WEB_PORT=4200
+
+# set true if running as a Demo
+DEMO=false
+
+ALLOW_SUPER_ADMIN_ROLE=true
+
+# set to Gauzy API base URL
+API_BASE_URL=https://api.example.com
+
+# set to Gauzy UI base URL
+CLIENT_BASE_URL=https://www.example.com
+
+# DB_TYPE: sqlite | postgres
+DB_TYPE=postgres
+
+# PostgreSQL Connection Parameters
+DB_HOST=db
+DB_PORT=5432
+DB_NAME=gauzy
+DB_USER=postgres
+DB_PASS=root
+
+```
+
 Together with Gauzy, Docker Compose will run following:
 
 -   [PostgreSQL](https://www.postgresql.org)

@@ -232,7 +232,7 @@
 		"rxjs": "^7.4.0",
 		"unleash": "^2.0.2",
 		"autoprefixer": "10.4.5",
-		"yargs": "^17.5.0",
+		"yargs": "^17.5.1",
 		"dotenv": "^16.0.0"
 	},
 	"devDependencies": {

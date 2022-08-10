@@ -229,7 +229,7 @@
 		"@angular/router": "13.2.2",
 		"@angular/service-worker": "13.2.2",
 		"ng2-smart-table": "^1.7.2",
-		"rxjs": "^7.4.0",
+		"rxjs": "^7.5.6",
 		"unleash": "^2.0.2",
 		"autoprefixer": "10.4.5",
 		"yargs": "^17.5.0",

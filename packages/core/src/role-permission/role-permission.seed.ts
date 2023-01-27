@@ -66,19 +66,24 @@ export const reloadRolePermissions = async (
 
 		for await (const { role: roleEnum, defaultEnabledPermissions } of DEFAULT_ROLE_PERMISSIONS) {
 			const role = roles.find((dbRole) => dbRole.name === roleEnum);
-			if (isNotEmpty(permissions)) {
-				for await (const permission of permissions) {
-					const existPermission = await dataSource.manager.query(
-						`SELECT DISTINCT
+			if (isNotEmpty(Permissions)) {
+			}
+				
+
+					for await (const permission of Permissions) {
+						async *[Symbol.asyncIterator](){
+						
+						const existPermission = await dataSource.manager.query(
+							`SELECT DISTINCT
 							"distinctAlias"."role_permission_id"
-						FROM (
-							SELECT
+							FROM (
+								SELECT
 								"role_permission"."id" AS "role_permission_id",
 								"role_permission"."tenantId" AS "role_permission_tenantId",
 								"role_permission"."permission" AS "role_permission_permission",
 								"role_permission"."roleId" AS "role_permission_roleId"
-							FROM "role_permission" "role_permission"
-							INNER JOIN "role" "role"
+								FROM "role_permission" "role_permission"
+								INNER JOIN "role" "role"
 								ON "role"."id"="role_permission"."roleId"
 							WHERE (
 								"role_permission"."tenantId" = $1 AND
